@@ -18,7 +18,7 @@ The dataset used in this project is sourced from [TripAdvisor Hotel Reviews data
 1. Clone the repository:
 
     ```
-    git clone https://github.com/yourusername/Pavagada-Forecst.git
+    git clone https://github.com/Mukund604/Pavagada-Forecst.git
     ```
 
 2. Download the dataset and place it in the `Data` directory: `Sentiment_Analysis/Data/tripadvisor_hotel_reviews.csv`.
