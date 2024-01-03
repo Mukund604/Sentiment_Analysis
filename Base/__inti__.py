@@ -1,1 +1,2 @@
-    
+from Working import runAnalysis
+from Working import predict_sentiment
