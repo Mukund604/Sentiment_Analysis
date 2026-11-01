@@ -1,46 +1,34 @@
-# Sentiment Analysis using Convolutional Neural Networks
+# Hotel Review Sentiment Analysis
 
-This repository contains code for performing sentiment analysis on hotel reviews using Convolutional Neural Networks (CNNs). The model is built using TensorFlow and Keras and trained on the TripAdvisor Hotel Reviews dataset.
-
-## Dataset
-The dataset used in this project is sourced from [TripAdvisor Hotel Reviews dataset](https://www.kaggle.com/andrewmvd/trip-advisor-hotel-reviews). It consists of reviews and corresponding ratings given by users. Sentiment labels are derived from the ratings, categorizing them as Positive, Negative, or Neutral based on a threshold.
-
-## Requirements
-- Python 3
-- Libraries:
-  - numpy
-  - pandas
-  - tensorflow
-  - scikit-learn
-  - keras
-
-## Usage
-1. Clone the repository:
-
-    ```
-    git clone https://github.com/Mukund604/Sentiment_Analysis.git
-    ```
-
-2. Download the dataset and place it in the `Data` directory: `Sentiment_Analysis/Data/tripadvisor_hotel_reviews.csv`.
-
-3. Install the required libraries:
-
-    ```
-    pip install -r requirements.txt
-    ```
-
-4. Run the `sentiment_analysis.ipynb` notebook or execute the `sentiment_analysis.py` script to train the CNN model and perform sentiment analysis on the reviews.
-
-## Files
-- `sentiment_analysis.ipynb`: Jupyter Notebook containing the code for data preprocessing, model building, training, and evaluation.
-- `sentiment_analysis.py`: Python script with the same functionality as the notebook.
-- `tokenizer.pickle`: Pickle file containing the tokenizer used for text tokenization.
-- `sentiment_analysis_model.h5`: Saved trained model weights and architecture in HDF5 format.
-- `Data/tripadvisor_hotel_reviews.csv`: Dataset used for sentiment analysis.
-
-## Model Architecture
-The model architecture involves an Embedding layer followed by a 1D Convolutional layer, GlobalMaxPooling1D layer, Dense layers, and Dropout for regularization.
+Classifies TripAdvisor hotel reviews as negative, neutral or positive, comparing a text CNN written in PyTorch with a TF-IDF baseline. There's also a small desktop app in `Base/` built around the original Keras model.
 
 ## Results
-The model achieves an accuracy of `accuracy_score` on the test dataset.
 
+Mean over 3 random 80/20 splits of 20,491 reviews (1 to 2 stars is negative, 3 is neutral, 4 to 5 is positive):
+
+| Model | Accuracy | Macro F1 |
+| :--- | ---: | ---: |
+| **TF-IDF with bigrams + logistic regression** | **84.5%** | **0.709** |
+| Text CNN (filter widths 3, 4, 5) | 83.2% | 0.684 |
+
+**The simple baseline wins.** On this much data, the CNN doesn't earn its extra training cost, so the baseline is the one I'd deploy.
+
+Neutral is the hard class: F1 is about 0.43 for the baseline against 0.93 for positive, on the first split. Three star reviews mix praise and complaints, and they make up only 11% of the data, which is why macro F1 sits so far below accuracy.
+
+## Run it
+
+```
+pip install -r requirements.txt
+python train.py
+```
+
+Results land in `results/metrics.json`.
+
+## Repo layout
+
+| Path | What it is |
+| :--- | :--- |
+| [`train.py`](train.py) | Trains and compares both models |
+| `Data/` | [TripAdvisor Hotel Reviews](https://www.kaggle.com/andrewmvd/trip-advisor-hotel-reviews) |
+| [`Base/original_keras_model.py`](Base/original_keras_model.py) | The first Keras version of the model |
+| [`Base/Working.py`](Base/Working.py) | Desktop app that loads the saved Keras model, and needs `keras`, `textblob`, `customtkinter` and `CTkMessagebox` |

@@ -9,7 +9,7 @@ from keras.models import Sequential
 from keras.layers import Embedding, Conv1D, GlobalMaxPooling1D, Dense, Dropout
 import pickle as pickle
 
-df = pd.read_csv('C:\\Users\\avaada\\Documents\\GitHub\\Pavagada-Forecst\\Sentiment_Analysis\\Data\\tripadvisor_hotel_reviews.csv')
+df = pd.read_csv('../Data/tripadvisor_hotel_reviews.csv')
 print(df.columns)
 
 

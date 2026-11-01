@@ -1,3 +1,5 @@
+import pathlib
+
 import keras
 import pickle
 import numpy as np
@@ -6,8 +8,9 @@ import customtkinter
 from CTkMessagebox import CTkMessagebox
 from textblob import TextBlob
 
-model = keras.models.load_model('C:\\Users\\avaada\\Documents\\GitHub\\Pavagada-Forecst\\Sentiment_Analysis\\Base\\Saved_Model\\sentiment_analysis_model.h5')
-with open('C:\\Users\\avaada\\Documents\\GitHub\\Pavagada-Forecst\\Sentiment_Analysis\\Base\\Saved_Model\\tokenizer.pickle', 'rb') as handle:
+BASE = pathlib.Path(__file__).parent
+model = keras.models.load_model(BASE / 'Saved_Model' / 'sentiment_analysis_model.h5')
+with open(BASE / 'Saved_Model' / 'tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 def runAnalysis():
@@ -27,7 +30,7 @@ def predict_sentiment(text):
         CTkMessagebox(message="Negative.",icon="warning")
     elif np.argmax(predicted_rating) == 1:
         # return 'Neutral'
-        CTkMessagebox(message="Nuetral.",icon="check")
+        CTkMessagebox(message="Neutral.",icon="check")
     else:
         CTkMessagebox(message="Positive.",icon="check")
 
